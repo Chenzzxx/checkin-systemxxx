@@ -1,7 +1,9 @@
 package com.example.controller;
 
 
+import com.example.dto.MemberDTO;
 import com.example.dto.ResultDTO;
+import com.example.entity.Activity;
 import com.example.entity.User;
 import com.example.service.ActivityService;
 import com.example.service.UserService;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/activity")
@@ -58,5 +61,98 @@ public class ActivityController {
     }
 
     //移除成员（发起人）
-    @DeleteMapping
+    @DeleteMapping("/removeMember")
+    public ResultDTO<String> removeMember(@RequestParam Long activityId, @RequestParam String operatorId,
+                                          @RequestParam String targetId){
+        boolean success = activityService.removeMember(activityId, operatorId, targetId);
+        if(!success){
+            return ResultDTO.error("移除失败，请检查权限");
+        }
+        return ResultDTO.success("移除成功",null);
+    }
+
+    //我发起的活动
+    @GetMapping("/my/created")
+    public ResultDTO<List<Activity>> getMyCreatedActivities(@RequestParam String userId)
+    {
+        return ResultDTO.success(activityService.getActivityByCreator(userId));
+    }
+
+    //我参与的活动
+    @GetMapping("/my/joined")
+    public ResultDTO<List<Activity>> getMyJoinedActivities(@RequestParam String userId){
+        return ResultDTO.success(activityService.getActivityByMember(userId));
+    }
+
+    //活动成员列表
+    @GetMapping("/{activityId}/members")
+    public ResultDTO<List<MemberDTO>> getActivityMembers(@PathVariable Long activityId,@RequestParam String viewerId)
+    {
+        if (!activityService.isCreator(activityId,viewerId)){
+            User viewer = userService.findByStudentId(viewerId);
+            if(viewer == null || viewer.getRole() != 2){
+                return ResultDTO.error(403,"权限不足");
+            }
+        }
+        return ResultDTO.success(activityService.getMemberNames(activityId));
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

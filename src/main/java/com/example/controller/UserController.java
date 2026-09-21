@@ -3,9 +3,9 @@ package com.example.controller;
 import com.example.dto.LoginRequestDTO;
 import com.example.dto.ResultDTO;
 import com.example.dto.StudentRegisterDTO;
+import com.example.dto.TeacherRegisterDTO;
 import com.example.entity.User;
 import com.example.service.UserService;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +26,7 @@ public class UserController {
         user.setPassword(dto.getPassword());
         user.setGrade(dto.getGrade());
         user.setClassName(dto.getClassName());
-        user.setDepartment(dto.setDepartment());
+        user.setDepartment(dto.getDepartment());
         boolean success = userService.registerStudent(user);
         if (success) {
             return ResultDTO.success("注册成功", null);
@@ -36,17 +36,17 @@ public class UserController {
 
     //老师注册
     @PostMapping("/register/teacher")
-    public ResultDTO<String> registerTeacher(@RequestBody StudentRegisterDTO dto) {
+    public ResultDTO<String> registerTeacher(@RequestBody TeacherRegisterDTO dto) {
         User user = new User();
         user.setPhone(dto.getPhone());
         user.setName(dto.getName());
         user.setPassword(dto.getPassword());
-        user.setDepartment(dto.setDepartment());
+        user.setDepartment(dto.getDepartment());
         boolean success = userService.registerTeacher(user);
         if (!success) {
             return ResultDTO.error("手机号已注册");
         }
-        User saved = userService.findByPhone(dto.getPhone);
+        User saved = userService.findByPhone(dto.getPhone());
         return ResultDTO.success("注册成功，您的账号是：" + saved.getStudentId(), saved.getStudentId());
     }
 
@@ -103,4 +103,3 @@ public class UserController {
     }
 }
 
-}
