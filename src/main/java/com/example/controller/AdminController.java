@@ -50,7 +50,7 @@ public class AdminController {
     //删除活动
     @DeleteMapping("/activity/{activityId}")
     public ResultDTO<String> deleteActivity(@PathVariable Long activityId, @RequestParam String adminId){
-        if(!isAdmin((adminId)){
+        if(!isAdmin(adminId)){
             return  ResultDTO.error(403,"权限不足");
         }
         boolean success = activityService.deleteActivity(activityId);
