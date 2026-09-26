@@ -6,6 +6,7 @@ import com.example.entity.User;
 import com.example.service.ActivityService;
 import com.example.service.SignService;
 import com.example.service.UserService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,7 +70,7 @@ public class SignController {
 
     //活动签到情况
     @GetMapping("/activity/{activityId}")
-    public ResultDTO<Map<String,Object>> getActivitySignRecords(@PathVariable Long activityId,@PathVariable String viewerId){
+    public ResultDTO<Map<String,Object>> getActivitySignRecords(@PathVariable Long activityId,@RequestParam String viewerId){
         if(!activityService.isCreator(activityId,viewerId))
         {
             User viewer = userService.findByStudentId(viewerId);
