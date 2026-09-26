@@ -20,7 +20,7 @@ public interface SignRecordMapper {
     List<SignRecord> findByActivityId(Long activityId);
 
     //今日是否已签到
-    @Select("select count(*) from sign_record where activity_id = #{activityId} and user_id = #{UserId} and date(sign_in_time) = curdate()")
+    @Select("select count(*) from sign_record where activity_id = #{activityId} and user_id = #{userId} and date(sign_in_time) = curdate()")
     int countTodayByUserAndActivity(Long activityId, String userId);
 
     //查看个人所有签到记录

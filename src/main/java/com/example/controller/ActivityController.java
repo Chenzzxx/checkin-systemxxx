@@ -45,7 +45,7 @@ public class ActivityController {
         if(startTime.isAfter(endTime)){
             return ResultDTO.error("签到开始时间不能晚于结束时间");
         }
-        Long activityId = activityService.createActivity(creatorId,name,description,startTime,endTime);
+        Long activityId = activityService.createActivity(name, description, creatorId, startTime, endTime);
         return ResultDTO.success("创建成功",activityId);
     }
 
