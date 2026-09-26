@@ -18,7 +18,7 @@ public interface ActivityMapper {
     Activity findById(Long id);
 
     //查看我发起的活动
-    @Select("select * from activity where creator_id=#{createrId}")
+    @Select("select * from activity where creator_id=#{creatorId}")
     List<Activity> findByCreatorId(@Param("creatorId")String creatorId);
 
     //查看我参与的活动
