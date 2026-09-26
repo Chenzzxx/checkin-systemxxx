@@ -9,8 +9,9 @@ import java.util.List;
 public interface ActivityMapper {
 
     //创建(插入）活动
-    @Insert("insert into activity (name,description,creator_id,sign_start_time,sign_end_time)"
+    @Insert("insert into activity (name,description,creator_id,sign_start_time,sign_end_time) "
                       + "values(#{name},#{description},#{creatorId},#{signStartTime},#{signEndTime})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(Activity activity);
 
     //根据Id查活动
