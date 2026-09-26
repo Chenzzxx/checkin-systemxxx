@@ -18,12 +18,17 @@ public interface ActivityMemberMapper {
 
     //查询活动成员（姓名+学号）
     @Select("select u.student_id,u.name from activity_member am join user u on am.user_id = u.student_id"
-                + "where am.activity_id=#{ActivityId}")
-    List<MemberDTO> findMerberNameAndId(Long activityId);
+                +"where am.activity_id=#{activityId}")
+    List<MemberDTO> findMemberNameAndId(Long activityId);
+
 
     //查活动所有成员记录
     @Select("select * from activity_member where activity_id = #{activityId}")
     List<ActivityMember> findByActivityId(Long activityId);
+
+    //查活动所有成员的用户ID
+    @Select("select user_id from activity_member where activity_id = #{activityId}")
+    List<String> findMemberIdsByActivityId(Long activityId);
 
     //判断是否是某活动成员
     @Select("select count(*) from activity_member where activity_id = #{activityId} and user_id = #{userId}")

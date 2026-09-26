@@ -21,7 +21,7 @@ public class SignServiceImpl implements SignService {
     private ActivityService activityService;
 
     @Override
-    public String signIn(Long activityId, String uersId){
+    public String signIn(Long activityId, String userId){
 
         //检查用户是否是活动成员
         if (!activityService.isMember(activityId,userId)){
@@ -44,7 +44,7 @@ public class SignServiceImpl implements SignService {
         }
 
         //检查今日是否已签到
-        int count = signRecordMapper.countTodayByUserAndActivity(actvityId,userId);
+        int count = signRecordMapper.countTodayByUserAndActivity(activityId,userId);
         if(count>0){
             return "今日已签到，请勿重复签到";
         }
