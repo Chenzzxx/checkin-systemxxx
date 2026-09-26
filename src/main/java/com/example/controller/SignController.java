@@ -6,7 +6,6 @@ import com.example.entity.User;
 import com.example.service.ActivityService;
 import com.example.service.SignService;
 import com.example.service.UserService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -88,7 +87,7 @@ public class SignController {
             long count  = records.stream().filter(r -> r.getUserId().equals(memberId))
                     .count();
             Map<String,Object> status = new HashMap<>();
-            status.put("name",memberId);
+            status.put("name",memberName);
             status.put("count",count);
             status.put("signed",count >0);
             memberStatus.put(memberId,status);
@@ -96,7 +95,7 @@ public class SignController {
         result.put("activityId",activityId);
         result.put("totalMembers",memberIds.size());
         result.put("totalSigned",records.stream().map(SignRecord::getUserId).distinct().count());
-        result.put("member",memberStatus);
+        result.put("members",memberStatus);
         result.put("records",records);
         return ResultDTO.success(result);
     }
