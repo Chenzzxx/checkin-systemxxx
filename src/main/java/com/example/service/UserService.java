@@ -18,7 +18,7 @@ public interface UserService {
 
     List<User> findAllUsers();
 
-    boolean delectById(String studentId);
+    boolean deleteById(String studentId);
 
     boolean update(User user);
 
