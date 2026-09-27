@@ -34,7 +34,7 @@ public interface UserMapper {
     int update(User user);
 
     //删除用户
-    @Delete("delect from user where student_id=#{studentId}")
+    @Delete("delete from user where student_id=#{studentId}")
     int delectById(String studentId);
 
 }
