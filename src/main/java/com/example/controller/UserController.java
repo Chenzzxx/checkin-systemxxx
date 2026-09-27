@@ -61,17 +61,6 @@ public class UserController {
         return ResultDTO.success(user);
     }
 
-    //查询所有用户（管理员）
-    @GetMapping("/list")
-    public ResultDTO<List<User>> listAllUsers(@RequestParam String adminId) {
-        User admin = userService.findByStudentId(adminId);
-        if (admin == null || admin.getRole() != 2) {
-            return ResultDTO.error(403, "权限不足");
-        }
-        List<User> users = userService.findAllUsers();
-        users.forEach(u -> u.setPassword(null));
-        return ResultDTO.success(users);
-    }
 
     //删除用户
     @DeleteMapping("/{studentId}")
