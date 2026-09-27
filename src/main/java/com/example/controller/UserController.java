@@ -80,7 +80,7 @@ public class UserController {
         if (admin == null || admin.getRole() != 2) {
             return ResultDTO.error(403, "权限不足");
         }
-        boolean success = userService.delectById(studentId);
+        boolean success = userService.deleteById(studentId);
         if (success) {
             return ResultDTO.success("删除成功", null);
         }

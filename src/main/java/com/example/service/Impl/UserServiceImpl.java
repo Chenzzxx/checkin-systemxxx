@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService{
 
     //根据学号删除用户
     @Override
-    public boolean delectById(String studentId){
+    public boolean deleteById(String studentId){
         return userMapper.deleteById(studentId)>0;
     }
 
