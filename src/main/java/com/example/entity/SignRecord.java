@@ -11,5 +11,4 @@ public class SignRecord {
     private LocalDateTime signInTime;
     private LocalDateTime createdAt;
 
-    private String userName;
 }
