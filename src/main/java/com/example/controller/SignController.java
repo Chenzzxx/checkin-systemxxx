@@ -79,6 +79,12 @@ public class SignController {
         }
         List<String> memberIds = activityService.getMemberIds(activityId);
         List<SignRecord> records = signService.getRecordsByActivity(activityId);
+        for (SignRecord record : records) {
+            User u = userService.findByStudentId(record.getUserId());
+            if (u != null) {
+                record.setUserName(u.getName());
+            }
+        }
         Map<String,Object> result = new HashMap<>();
         Map<String,Object> memberStatus = new HashMap<>();
         for(String memberId : memberIds){
