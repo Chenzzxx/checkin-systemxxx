@@ -17,7 +17,7 @@ public interface ActivityMemberMapper {
     int insert (ActivityMember member);
 
     //查询活动成员（姓名+学号）
-    @Select("select u.student_id,u.name from activity_member am join user u on am.user_id = u.student_id"
+    @Select("select u.student_id,u.name,u.department from activity_member am join user u on am.user_id = u.student_id"
                 +" where am.activity_id=#{activityId}")
     List<MemberDTO> findMemberNameAndId(Long activityId);
 
