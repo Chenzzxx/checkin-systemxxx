@@ -24,7 +24,7 @@ public interface SignRecordMapper {
     int countTodayByUserAndActivity(Long activityId, String userId);
 
     //查看个人所有签到记录
-    @Select("select * from sign_record where user_id = #{UserId} order by sign_in_time desc")
+    @Select("select * from sign_record where user_id = #{userId} order by sign_in_time desc")
     List<SignRecord> findByUserId(String userId);
 
     //统计总签到次数

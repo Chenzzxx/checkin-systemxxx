@@ -6,6 +6,7 @@ import com.example.entity.ActivityMember;
 import com.example.entity.User;
 import com.example.mapper.ActivityMapper;
 import com.example.mapper.ActivityMemberMapper;
+import com.example.mapper.SignRecordMapper;
 import com.example.service.ActivityService;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SignRecordMapper signRecordMapper;
 
     //创建活动，创建者自动成为发起人，并且自动成为成员
     @Override
@@ -119,7 +123,15 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<MemberDTO> getMemberNames(Long activityId) {
-        return activityMemberMapper.findMemberNameAndId(activityId);
+        List<MemberDTO> members = activityMemberMapper.findMemberNameAndId(activityId);
+        for (MemberDTO member : members) {
+            int total = signRecordMapper.countByActivityAndUser(activityId,member.getStudentId());
+            member.setSignedCount(total);
+            int todayCount = signRecordMapper.countTodayByUserAndActivity(activityId, member.getStudentId());
+            boolean isSignedToday = (todayCount > 0);
+            member.setSignedToday(isSignedToday);
+        }
+        return members;
     }
 
     @Override

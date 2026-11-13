@@ -6,4 +6,7 @@ import lombok.Data;
 public class MemberDTO {
     private String studentId;
     private String name;
+
+    private Integer signedCount;
+    private Boolean signedToday;
 }
